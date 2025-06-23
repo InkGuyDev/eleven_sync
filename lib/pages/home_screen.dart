@@ -1,5 +1,5 @@
-import 'package:eleven_sync/pages/player_stats.dart';
-import 'package:eleven_sync/pages/preferences.dart';
+import 'package:eleven_sync/pages/speed_train_screen.dart';
+import 'package:eleven_sync/pages/tactics_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:eleven_sync/theme/util.dart';
 import 'package:eleven_sync/theme/theme.dart';
@@ -50,7 +50,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final UserRole userRole = UserRole.jugador;
-  final String userName = 'Rodrigo';
+  final String userName = '';
 
   //_HomeScreenState({required this.userRole, required this.userName});
 
@@ -80,30 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      persistentFooterButtons: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PlayerStatsScreen(),
-              ),
-            );
-          },
-          child: Icon(Icons.directions, size: 90),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PreferencesScreen(),
-              ),
-            );
-          },
-          child: Icon(Icons.room_preferences, size: 90),
-        ),
-      ],
     );
   }
 
@@ -133,23 +109,27 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (role) {
       case UserRole.jugador:
         botones = [
-          _actionButton('Ver rutina', Icons.fitness_center),
-          _actionButton('Ver táctica', Icons.sports_soccer),
-          _actionButton('Confirmar asistencia', Icons.check_circle),
+          _actionButton(
+            'Nuevo entrenamiento disponible: Velocidad',
+            Icons.fitness_center,
+            1,
+          ),
+          _actionButton('Ver tácticas', Icons.sports_soccer, 2),
+          //_actionButton('Confirmar asistencia', Icons.check_circle),
         ];
         break;
       case UserRole.dt:
         botones = [
-          _actionButton('Crear táctica', Icons.add_chart),
-          _actionButton('Editar equipo', Icons.group),
-          _actionButton('Enviar mensaje', Icons.message),
+          _actionButton('Crear táctica', Icons.add_chart, 0),
+          _actionButton('Editar equipo', Icons.group, 0),
+          _actionButton('Enviar mensaje', Icons.message, 0),
         ];
         break;
       case UserRole.preparador:
         botones = [
-          _actionButton('Asignar rutina', Icons.assignment),
-          _actionButton('Ver progreso', Icons.trending_up),
-          _actionButton('Plan semanal', Icons.calendar_view_week),
+          _actionButton('Asignar rutina', Icons.assignment, 0),
+          _actionButton('Ver progreso', Icons.trending_up, 0),
+          _actionButton('Plan semanal', Icons.calendar_view_week, 0),
         ];
         break;
     }
@@ -211,9 +191,39 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _actionButton(String label, IconData icon) {
+  void _navigationAction(int page) {
+    switch (page) {
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => SpeedTrainingScreen()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => TacticaScreen()),
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  Widget _actionButton(String label, IconData icon, int act) {
     return FilledButton.icon(
-      onPressed: () {},
+      onPressed: () {
+        switch (act) {
+          case 1:
+            _navigationAction(1);
+            break;
+          case 2:
+            _navigationAction(2);
+            break;
+          default:
+            break;
+        }
+      },
       icon: Icon(icon),
       label: Text(label),
     );

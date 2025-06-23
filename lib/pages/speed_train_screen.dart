@@ -64,10 +64,27 @@ class _SpeedTrainingScreenState extends State<SpeedTrainingScreen> {
     });
   }
 
-  void _stopTraining() {
+  void _stopTraining() async {
     _stopwatch.stop();
     _timer?.cancel();
     _isRunning = false;
+
+    final prefs = await SharedPreferences.getInstance();
+    final previousRecord = prefs.getDouble('recordAcceleration') ?? 0.0;
+    final previousSprint = prefs.getDouble('recordSprintTime') ?? 0.0;
+    if (_maxAcceleration > previousRecord) {
+      await prefs.setDouble('recordAcceleration', _maxAcceleration);
+    }
+    if (_stopwatch.elapsed.inSeconds > previousSprint) {
+      await prefs.setDouble(
+        'recordSprintTime',
+        _stopwatch.elapsed.inSeconds * 1.0,
+      );
+      await prefs.setString(
+        'recordSprint',
+        '${_stopwatch.elapsed.inSeconds} Segundos de Sprint',
+      );
+    }
 
     double maxDisplay =
         _useImperial ? _maxAcceleration * 3.28084 : _maxAcceleration;

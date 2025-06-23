@@ -1,4 +1,3 @@
-import 'package:eleven_sync/pages/speed_train_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +10,8 @@ class PlayerStatsScreen extends StatefulWidget {
 
 class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
   bool _useImperial = false;
+  double _recordAcceleration = 0.0;
+  String _recordSprint = '';
 
   @override
   void initState() {
@@ -22,18 +23,15 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _useImperial = prefs.getBool('useImperial') ?? false;
+      _recordAcceleration = prefs.getDouble('recordAcceleration') ?? 0.0;
+      _recordSprint = prefs.getString('recordSprint') ?? '';
     });
   }
 
-  String _formatDistance(double km) =>
+  String _formatAcceleration(double acc) =>
       _useImperial
-          ? '${(km * 0.621371).toStringAsFixed(2)} mi'
-          : '${km.toStringAsFixed(2)} km';
-
-  String _formatSpeed(double kph) =>
-      _useImperial
-          ? '${(kph * 0.621371).toStringAsFixed(2)} mph'
-          : '${kph.toStringAsFixed(2)} km/h';
+          ? '${(acc * 3.28084).toStringAsFixed(2)} ft/s²'
+          : '${acc.toStringAsFixed(2)} m/s²';
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +47,10 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            _buildStatCard('Velocidad máxima', _formatSpeed(29.7), Icons.speed),
             _buildStatCard(
-              'Distancia total',
-              _formatDistance(7.2),
-              Icons.directions_run,
-            ),
-            _buildStatCard(
-              'Tiempo en zona roja',
-              '12 min',
-              Icons.local_fire_department,
+              'Aceleración máxima',
+              _formatAcceleration(_recordAcceleration),
+              Icons.trending_up,
             ),
             const SizedBox(height: 24),
             const Text(
@@ -66,28 +58,13 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            _buildHighlight('Mejor sprint', '6.4 seg en 40m'),
             _buildHighlight(
-              'Mayor carga de entrenamiento',
-              'lunes 10 de junio',
+              'Mejor sprint',
+              _recordSprint.isNotEmpty ? _recordSprint : 'No registrado',
             ),
-            _buildHighlight('Mayor participación', 'vs. U17 Águilas - 90 min'),
           ],
         ),
       ),
-      persistentFooterButtons: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SpeedTrainingScreen(),
-              ),
-            );
-          },
-          child: Icon(Icons.directions, size: 90),
-        ),
-      ],
     );
   }
 
