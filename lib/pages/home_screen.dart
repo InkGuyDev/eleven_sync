@@ -50,7 +50,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final UserRole userRole = UserRole.jugador;
-  final String userName = '';
+  final String userName = 'Usuario';
 
   //_HomeScreenState({required this.userRole, required this.userName});
 

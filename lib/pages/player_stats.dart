@@ -12,6 +12,7 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
   bool _useImperial = false;
   double _recordAcceleration = 0.0;
   String _recordSprint = '';
+  String _startDay = 'Lunes';
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
       _useImperial = prefs.getBool('useImperial') ?? false;
       _recordAcceleration = prefs.getDouble('recordAcceleration') ?? 0.0;
       _recordSprint = prefs.getString('recordSprint') ?? '';
+      _startDay = prefs.getString('startDay') ?? 'Lunes';
     });
   }
 
@@ -42,6 +44,11 @@ class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'Inicio de semana: $_startDay',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 8),
             const Text(
               'Resumen físico',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

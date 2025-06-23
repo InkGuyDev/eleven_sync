@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:eleven_sync/domain/entities/tactic.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eleven_sync/data/services/database_helper.dart';
+import 'package:eleven_sync/domain/entities/tactic.dart';
 
 class TacticaScreen extends StatefulWidget {
   const TacticaScreen({super.key});
@@ -12,56 +13,26 @@ class TacticaScreen extends StatefulWidget {
 class _TacticaScreenState extends State<TacticaScreen> {
   List<Tactica> _tacticas = [];
   final List<String> formaciones = ['4-3-3', '4-4-2', '3-4-3', '4-5-1'];
+  bool _editarActivo = true;
 
   @override
   void initState() {
     super.initState();
     _loadTacticas();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Tácticas')),
-      body: ListView.builder(
-        itemCount: _tacticas.length,
-        itemBuilder: (context, index) {
-          final tactica = _tacticas[index];
-          return ListTile(
-            title: Text(tactica.titulo),
-            subtitle: Text(
-              '${tactica.descripcion}\nFormación: ${tactica.formacion}',
-            ),
-            isThreeLine: true,
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () => _editarTactica(tactica, context),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => _eliminarTactica(tactica.id!),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          _addTactica(context);
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
+    _loadPermisoDT();
   }
 
   Future<void> _loadTacticas() async {
     final data = await TacticaDatabase.getTacticas();
     setState(() {
       _tacticas = data;
+    });
+  }
+
+  Future<void> _loadPermisoDT() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _editarActivo = prefs.getBool('permisoDT') ?? true;
     });
   }
 
@@ -183,5 +154,50 @@ class _TacticaScreenState extends State<TacticaScreen> {
   Future<void> _eliminarTactica(int id) async {
     await TacticaDatabase.deleteTactica(id);
     _loadTacticas();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Tácticas')),
+      body: ListView.builder(
+        itemCount: _tacticas.length,
+        itemBuilder: (context, index) {
+          final tactica = _tacticas[index];
+          return ListTile(
+            title: Text(tactica.titulo),
+            subtitle: Text(
+              '${tactica.descripcion}\nFormación: ${tactica.formacion}',
+            ),
+            isThreeLine: true,
+            trailing:
+                _editarActivo
+                    ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () => _editarTactica(tactica, context),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => _eliminarTactica(tactica.id!),
+                        ),
+                      ],
+                    )
+                    : null,
+          );
+        },
+      ),
+      floatingActionButton:
+          _editarActivo
+              ? FloatingActionButton(
+                onPressed: () async {
+                  _addTactica(context);
+                },
+                child: const Icon(Icons.add),
+              )
+              : null,
+    );
   }
 }

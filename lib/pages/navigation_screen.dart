@@ -1,3 +1,5 @@
+import 'package:eleven_sync/pages/about.dart';
+import 'package:eleven_sync/pages/nav_team.dart';
 import 'package:eleven_sync/pages/nav_trainings.dart';
 import 'package:flutter/material.dart';
 import 'package:eleven_sync/pages/player_stats.dart';
@@ -33,6 +35,10 @@ class NavigationScreen extends StatelessWidget {
             Icons.fitness_center,
             const NavTrainings(),
           ),
+          const SizedBox(height: 12),
+          _navButton(context, 'Equipo', Icons.group, const NavTeam()),
+          const SizedBox(height: 12),
+          _navButton(context, 'Sobre', Icons.info, const AboutScreen()),
           const SizedBox(height: 12),
           _navButton(
             context,
