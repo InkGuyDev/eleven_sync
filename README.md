@@ -42,6 +42,7 @@ Accede a la pantalla 'Sobre' y responde la encuesta enviando tu respuesta al cor
 
 ![Pantalla Home](screenshots/home.png)
 ![Pantalla Desempeño](screenshots/desempeno.png)
+![Pantalla Desempeño](screenshots/tacticas.png)
 ![Pantalla Encuesta](screenshots/encuesta.png)
 
 
