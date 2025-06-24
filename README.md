@@ -39,11 +39,11 @@ Accede a la pantalla 'Sobre' y responde la encuesta enviando tu respuesta al cor
 
 ## 🖼️ Capturas de pantalla
 
-```md
+
 ![Pantalla Home](screenshots/home.png)
 ![Pantalla Desempeño](screenshots/desempeno.png)
 ![Pantalla Encuesta](screenshots/encuesta.png)
-```
+
 
 ---
 
