@@ -33,12 +33,11 @@
 ## 🧪 Encuesta de satisfacción
 
 Los usuarios pueden calificar la aplicación directamente desde la app y compartir sus respuestas fácilmente con el equipo de desarrollo.
+Accede a la pantalla 'Sobre' y responde la encuesta enviando tu respuesta al correo Diaz35scrodrigo@gmail.com para obtener tu retroalimentación.
 
 ---
 
 ## 🖼️ Capturas de pantalla
-
-*Agrega aquí tus capturas de pantalla más relevantes (por ejemplo, Home, Entrenamiento, Desempeño, Encuesta, Preferencias, Tácticas)*
 
 ```md
 ![Pantalla Home](screenshots/home.png)
@@ -50,31 +49,23 @@ Los usuarios pueden calificar la aplicación directamente desde la app y compart
 
 ## 📦 Instalación del APK
 
-Puedes compilar el APK ejecutando:
-
-```bash
-flutter build apk --release
-```
-
-El archivo se encontrará en:
-
-```bash
-build/app/outputs/flutter-apk/app-release.apk
-```
+El APK se encuentra disponible en el respositorio dentro de la carpeta apk. Asegurate de habilitar los origenes desconocidos en tu dispositivo Android para 
+poder instalarla sin problemas.
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto fue desarrollado como parte de la **Dinámica Práctica 2** del curso *Programación de Dispositivos Móviles (2025/1)*.
+Este proyecto fue desarrollado como parte del curso *Programación Para Dispositivos Móviles* de la carrera Ingenieria en Desarrollo de Videojuegos y Realidad Virtual
+que a su vez es impartida por la Universidad De Talca, en Talca, Maule, Chile. Visite http://videojuegos.utalca.cl/ para más información.
 
 ---
 
 ## ✨ Desarrollado por
 
-**Rodrigo Díaz**
+**Rodrigo Díaz (ALIAS: IncGuy)**
+IG: @ItzIncGuy
 
 ---
 
-¿Tienes sugerencias o deseas colaborar? ¡Abre un issue o pull request!
 
